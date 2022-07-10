@@ -13,4 +13,3 @@ class UnitSchema(Schema):
     course_id = fields.Str()
     position = fields.Integer()
     title = fields.Str()
-    id = fields.Str()

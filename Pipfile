@@ -9,6 +9,7 @@ marshmallow = "*"
 waitress = "*"
 paste = "*"
 flask-mongoengine = "*"
+flask-cors = "*"
 
 [dev-packages]
 autopep8 = "*"

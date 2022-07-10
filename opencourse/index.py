@@ -1,4 +1,5 @@
 import logging
+from os import environ
 from flask import Flask
 from flask_cors import CORS
 from flask_mongoengine import MongoEngine
@@ -13,12 +14,18 @@ from endpoints.blueprint_note import blueprint_note
 app = Flask(__name__)
 
 #mongodb setup
+mongodb_db = environ.get('MONGODB_DB', 'opencourse')
+mongodb_host = environ.get('MONGODB_HOST', 'localhost')
+mongodb_port = environ.get('MONGODB_PORT', 27017)
+mongodb_user = environ.get('MONGODB_USER', 'root')
+mongodb_pass = environ.get('MONGODB_PASS', 'rootpassword')
+
 app.config['MONGODB_SETTINGS'] = {
-    'db': 'project1',
-    'host': 'localhost',
-    'port': 27017,
-    'username':'root',
-    'password':'rootpassword'
+    'db': mongodb_db,
+    'host': mongodb_host,
+    'port': mongodb_port,
+    'username': mongodb_user,
+    'password': mongodb_pass
 }
 db = MongoEngine()
 db.init_app(app)
@@ -44,4 +51,4 @@ app.register_blueprint(blueprint_note, url_prefix = versioned_url_prefix)
 
 #waitress server
 if __name__ == "__main__":
-  serve(TransLogger(app, setup_console_handler=True), port=5000)
+  serve(TransLogger(app, setup_console_handler=True),host='0.0.0.0', port=5000)
